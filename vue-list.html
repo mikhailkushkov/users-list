@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+    <script src="https://unpkg.com/v-tooltip"></script>
+</head>
+<body>
+
+    <div id="app" class="container">
+        <h2>Users list</h2>
+
+        <div v-if="!users.length" class="alert alert-warning">Loading...</div>
+        <table v-else class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Nickname</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in users" :key="user.id">
+                <td># {{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.address.street }} , {{ user.address.city }} , {{ user.address.zipcode }}</td>
+                <td>
+                    <button type="button" v-on:click="remove(user.name)">
+                        delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="8">
+                        Amount of users: {{ total }}
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+
+    <script>
+
+         window.app = new Vue({
+             el: "#app",
+             data: function() {
+                return {
+                    users: []
+                };
+             },
+             computed: {
+                 total () {
+                     return this.users.length;
+                 },
+                 filteredUsers () {
+                     return this.users.filter(function (item, index) {
+                         return index > 1
+                     })
+                 }
+             },
+             mounted () {
+                 this.loadUsers();
+             },
+             methods: {
+                 loadUsers () {
+                    this.users = [
+                        {
+                            id: 1,
+                            name: 'Leanne Graham',
+                            username: 'Bret',
+                            email: '1test@google.com',
+                            address: {
+                                street: 'Kulas Light',
+                                suite: 'Apt. 55',
+                                city: 'New York',
+                                zipcode: '682364'
+                            },
+                            phone: '1-2345-44-556',
+                            website: 'test123.org'
+                        },
+                        {
+                            id: 2,
+                            name: 'Michael',
+                            username: 'Johnson',
+                            email: '2test@google.com',
+                            address: {
+                                street: 'Manhattan',
+                                suite: 'AVe 23',
+                                city: 'New York',
+                                zipcode: '682456'
+                            },
+                            phone: '1-2345-555556',
+                            website: 'test222.org'
+                        },
+                        {
+                            id: 3,
+                            name: 'Anna',
+                            username: 'Smith',
+                            email: 'anna12345@google.com',
+                            address: {
+                                street: 'New Avenue 56',
+                                suite: '45 H.G',
+                                city: 'Los Angeles',
+                                zipcode: '68445'
+                            },
+                            phone: '2-211115-555556',
+                            website: 'test345.org'
+                        },
+                        {
+                            id: 4,
+                            name: 'Mark',
+                            username: 'Wahlberg',
+                            email: 'm.wahlberg@google.com',
+                            address: {
+                                street: 'Backer str. 345',
+                                suite: 'WA 89',
+                                city: 'Hollywood',
+                                zipcode: '68345'
+                            },
+                            phone: '223´455556',
+                            website: 'wahlberg.com'
+                        }
+                    ]
+                 },
+                 remove () {
+                     console.log(this.users.length);
+                     this.users = this.users.filter(user => user.id !== user.id);
+                 }
+            }
+        })
+    </script>
+
+
+</body>
+</html>
